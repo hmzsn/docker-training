@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+
+  app:
+    image: wordpress
+#    build: .
+    ports:
+      - 80:80
+ #    environment:
+ #     WORDPRESS_DB_HOST: db
+ #     WORDPRESS_DB_USER: root
+ #     WORDPRESS_DB_NAME: wordpress_db
+ #   volumes:
+ #     - wordpress:/var/www/html
+#    networks:
+#      - a-net
+  db-client:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    links:
+      - db-a:db
+  mail-server:
+    image: axllent/mailpit
+    ports:
+      - 8025:8025
+      - 1025:1025
+  db-a:
+    image: mysql
+    volumes:
+      - db-data:/var/lib/mysql
+#    build: .
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+volumes:
+  db-data:
+#  wordpress:
+#    networks:
+#      - a-net
+#      - b-net
+#    volumes:
+#      - app-data:/usr/share/nginx/html/
+
+#volumes:
+#  app-data: 
+#    external: true
+#networks:
+#  a-net:
+#  b-net:
+#    external: true

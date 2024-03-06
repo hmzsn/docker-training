@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+
+  systemb:
+
+    #image: local/nginx
+    build: .
+    ports:
+      - 81:80
+    networks:
+      - b-net
+
+  db-b:
+    image: mysql
+#    build: .
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_ROOT_PASSWORD: 'yes'
+    networks:
+      - b-net
+
+#volumes:
+#  app-data: 
+#    external: true
+networks:
+  b-net:
